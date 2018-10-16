@@ -16,10 +16,10 @@ module.exports = class PingCommand extends Command {
 						}
 
 	async run(msg,user) {
+		msg.delete();
 		let banrole = msg.guild.roles.get('501861061364940800');
 		if(!msg.member.roles.has(banrole.id)) return msg.channel.send("The specified user isnt linkbanned.").then(message => {message.delete(5000)});
 		msg.member.removeRole(banrole).then(msg.mentions.members.first().send('Your access to member-links has been restored'));
-		msg.delete();
 	}
 }
 exports.help = {
