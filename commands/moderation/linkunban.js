@@ -16,7 +16,7 @@ module.exports = class PingCommand extends Command {
 						}
 
 	async run(msg,user) {
-		let banrole = msg.guild.roles.filter("name", "links banned");
+		let banrole = msg.guild.roles.get('501861061364940800');
 		if(!msg.member.roles.has(banrole.id)) return msg.channel.send("The specified user isnt linkbanned.");
 		msg.member.removeRole(banrole).then(user.send('Your access to member-links has been restored'));
 	}
