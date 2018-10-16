@@ -1,46 +1,26 @@
-const Discord = require("discord.js");
-const ms = require("ms");
-const fs = require("fs");
+var { Command } = require("discord.js-commando");
+module.exports = class PingCommand extends Command { 
+	constructor(client) {super(client, {
+		name: "linkban",
+		group: "moderation",
+		description: "Prevents a user from accessing member-links.",
+		memberName: "ban",
+		args: [
+ 			{
+				key: 'user',
+				prompt: 'The user to linkban.',
+				type: 'user'
+			}
+		]
+	});
+						}
 
-exports.run = async (client, msg, args) => {
-  if(!msg.member.hasPermission("MANAGE_MESSAGES")) return msg.reply("You can't do that, buddy.");
-  let tomute = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
-  if(!tomute) return msg.reply("Couldn't find user.");
-  if(tomute.hasPermission("MANAGE_MESSAGES")) return msg.reply("Can't mute them!");
-  let muterole = msg.guild.roles.find(`name`, "Muted");
-  let tmutereason;
-  if(!muterole){
-    try{
-      muterole = await msg.guild.createRole({
-        name: "Muted",
-        color: "#000000",
-        permissions:[]
-      })
-      msg.guild.channels.forEach(async (channel, id) => {
-        await channel.overwritePermissions(muterole, {
-          SEND_MESSAGES: false,
-          ADD_REACTIONS: false
-        });
-      });
-    }catch(e){
-      console.log(e.stack);
-    }
-  }
-  let mutetime = args[1];
-  if(!mutetime) return msg.reply("You didn't specify a time!");
-
-try {
-  await(tomute.addRole(muterole.id));
-  msg.reply(`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`);
-
-  setTimeout(function(){
-    tomute.removeRole(muterole.id);
-    msg.channel.send(`<@${tomute.id}> has been unmuted!`);
-  }, ms(mutetime));
-}catch(e){console.error(e);}
-
+	async run(msg,user) {
+		let banrole = msg.guild.roles.get('483870035077758976');
+		if(msg.member.roles.has(banrole.id)) return msg.channel.send("The specified user is already linkbanned!");
+		msg.member.addRole(banrole).then(user.send('You have been banned from accessing member-links! The only way the punishment will be lifted is if you sincerely apologize to a staff member.'));
+	}
 }
-
 exports.help = {
-  name: "tempmute"
+	name: "linkban"
 }
