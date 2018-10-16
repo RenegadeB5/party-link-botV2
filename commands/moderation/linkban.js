@@ -4,7 +4,7 @@ module.exports = class PingCommand extends Command {
 		name: "linkban",
 		group: "moderation",
 		description: "Prevents a user from accessing member-links.",
-		memberName: "ban",
+		memberName: "linkban",
 		args: [
  			{
 				key: 'user',
