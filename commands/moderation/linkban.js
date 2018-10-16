@@ -18,7 +18,7 @@ module.exports = class PingCommand extends Command {
 	async run(msg,user) {
 		let banrole = msg.guild.roles.get('501861061364940800');
 		if(msg.member.roles.has(banrole.id)) return msg.channel.send("The specified user is already linkbanned!").then(message => {message.delete(5000)});
-		msg.member.addRole(banrole).then(msg.mentions.members.first().send('You have been banned from accessing member-links! The only way the punishment will be lifted is if you sincerely apologize to a staff member.'));
+		msg.mentions.members.first().addRole(banrole).then(msg.mentions.members.first().send('You have been banned from accessing member-links! The only way the punishment will be lifted is if you sincerely apologize to a staff member.'));
 		msg.delete();
 	}
 }
