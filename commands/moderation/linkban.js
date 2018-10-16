@@ -19,6 +19,7 @@ module.exports = class PingCommand extends Command {
 		let banrole = msg.guild.roles.get('501861061364940800');
 		if(msg.member.roles.has(banrole.id)) return msg.channel.send("The specified user is already linkbanned!");
 		msg.member.addRole(banrole);
+		console.log(user);
 	}
 }
 exports.help = {
