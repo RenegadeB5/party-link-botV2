@@ -5,6 +5,7 @@ module.exports = {
 	type: "event",
 	on: {
 		messageReactionAdd: async function (reaction) {
+			console.log('reaction');
 			if(reaction.emoji.name === '🔗' && reaction.message.channel.id === '498736242905710592') {
 				const user = reaction.users.map(r => r.id);
 				const userid = user[user.length-1];
